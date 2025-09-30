@@ -1,0 +1,10 @@
+name: ExcellentQuests
+main: su.nightexpress.quests.QuestsPlugin
+version: '${project.version}'
+description: A lightweight milestones & daily quests system!
+author: NightExpress
+depend:
+  - nightcore
+softdepend:
+  - PlaceholderAPI
+api-version: 1.21
