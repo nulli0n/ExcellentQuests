@@ -35,19 +35,19 @@ public class CraftingTaskListener extends TaskListener<ItemStack, AdapterFamily<
 
         if (event.isShiftClick()) {
             int has = Players.countItem(player, craftedItem);
-            this.plugin.getServer().getScheduler().runTask(plugin, () -> {
+            this.plugin.runTask(() -> {
                 int now = Players.countItem(player, craftedItem);
                 int crafted = now - has;
-                int craftedUnits = crafted / unitSize;
+                //int craftedUnits = crafted / unitSize;
 
-                this.progressQuests(player, craftedItem, craftedUnits);
+                this.progressQuests(player, craftedItem, crafted);
             });
             return;
         }
 
         ItemStack cursor = event.getCursor();
         if (cursor.getType().isAir()) {
-            this.progressQuests(player, craftedItem);
+            this.progressQuests(player, craftedItem, unitSize);
             return;
         }
 
@@ -55,6 +55,6 @@ public class CraftingTaskListener extends TaskListener<ItemStack, AdapterFamily<
             return;
         }
 
-        this.progressQuests(player, craftedItem);
+        this.progressQuests(player, craftedItem, unitSize);
     }
 }
