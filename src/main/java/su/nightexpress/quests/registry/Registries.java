@@ -22,8 +22,6 @@ public class Registries {
 
     public static void setup(@NotNull QuestsPlugin plugin) {
         registerDefaultAdapters(plugin);
-
-        plugin.runTask(Registries::freezeAll); // Freeze all registries 1 tick later after all plugins load.
     }
 
     public static void shutdown() {
@@ -31,10 +29,10 @@ public class Registries {
         TASK_TYPE.clear();
     }
 
-    private static void freezeAll() {
+    /*private static void freezeAll() {
         ADAPTER.freeze();
         TASK_TYPE.freeze();
-    }
+    }*/
 
     private static void registerDefaultAdapters(@NotNull QuestsPlugin plugin) {
         registerAdapter(Adapter.VANILLA_MOB, AdapterFamily.ENTITY);

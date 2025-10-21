@@ -97,12 +97,14 @@ public class QuestsPlugin extends NightPlugin {
         if (this.rewardManager != null) this.rewardManager.shutdown();
         if (this.userManager != null) this.userManager.shutdown();
         if (this.dataHandler != null) this.dataHandler.shutdown();
+
+        Registries.shutdown();
     }
 
     @Override
     protected void onShutdown() {
         super.onShutdown();
-        Registries.shutdown();
+
         QuestsAPI.shutdown();
     }
 

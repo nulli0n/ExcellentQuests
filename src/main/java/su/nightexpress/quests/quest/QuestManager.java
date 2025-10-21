@@ -70,7 +70,11 @@ public class QuestManager extends AbstractManager<QuestsPlugin> {
         }
 
         FileUtil.getConfigFiles(this.dirPath).forEach(file -> {
-            String id = Strings.filterForVariable(FileConfig.getName(file));
+            String id = Strings.varStyle(FileConfig.getName(file)).orElse(null);
+            if (id == null) {
+                this.plugin.error("Could not load quest '" + file.getPath() + "' due to malformed file name.");
+                return;
+            }
 
             Quest quest = new Quest(file, id);
             try {
@@ -100,7 +104,7 @@ public class QuestManager extends AbstractManager<QuestsPlugin> {
     }
 
     public void createQuest(@NotNull String name, @NotNull Consumer<Quest> consumer) {
-        String id = Strings.filterForVariable(name);
+        String id = Strings.varStyle(name).orElseThrow(() -> new IllegalArgumentException("Invalid quest ID '" + name + "'"));
         if (this.getQuestById(id) != null) return;
 
         File file = new File(this.dirPath, FileConfig.withExtension(id));
@@ -151,12 +155,24 @@ public class QuestManager extends AbstractManager<QuestsPlugin> {
         int maxQuests = Config.QUESTS_AMOUT_PER_RANK.get().getGreatest(player).intValue();
         if (maxQuests <= 0) return;
 
+        long nextQuestsDate = TimeUtil.toEpochMillis(QuestUtils.getNewDayMidnight());
+        boolean acceptionRequired = Config.QUESTS_ACCEPTION_REQUIRED.get();
+        boolean autoCompletionTime = Config.QUESTS_AUTO_COMPLETION_TIME.get();
+
         List<Quest> quests = new ArrayList<>(this.questById.values());
         while (maxQuests > 0 && !quests.isEmpty()) {
             Quest quest = quests.remove(Rnd.nextInt(quests.size()));
 
             QuestData questData = quest.createQuestData();
             if (questData == null) return;
+
+            if (!acceptionRequired) {
+                questData.setActive(true);
+                questData.setExpireDate(TimeUtil.createFutureTimestamp(quest.getCompletionTime()));
+            }
+            if (autoCompletionTime) {
+                questData.setExpireDate(nextQuestsDate);
+            }
 
             user.addQuestData(questData);
 
@@ -166,7 +182,7 @@ public class QuestManager extends AbstractManager<QuestsPlugin> {
         int count = user.countQuestsAmount();
         Lang.QUESTS_REFRESHED.message().send(player, replacer -> replacer.replace(QuestsPlaceholders.GENERIC_AMOUNT, String.valueOf(count)));
 
-        user.setNewQuestsDate(TimeUtil.toEpochMillis(QuestUtils.getNewDayMidnight()));
+        user.setNewQuestsDate(nextQuestsDate);
 
         if (this.questsMenu.isViewer(player)) {
             this.plugin.runTask(() -> this.questsMenu.flush(player)); // Back to the main thread for GUI update.

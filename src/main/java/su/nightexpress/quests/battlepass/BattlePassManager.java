@@ -56,7 +56,7 @@ public class BattlePassManager extends AbstractManager<QuestsPlugin> {
 
     @Override
     protected void onLoad() {
-        FileConfig config = FileConfig.loadOrExtract(this.plugin, FILE_NAME);
+        FileConfig config = FileConfig.load(this.plugin.getDataFolder().getAbsolutePath(), FILE_NAME);
 
         config.initializeOptions(BattlePassConfig.class);
         this.plugin.runTaskAsync(task -> this.loadSeasons());

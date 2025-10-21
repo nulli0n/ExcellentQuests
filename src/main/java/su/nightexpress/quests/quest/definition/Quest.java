@@ -19,6 +19,7 @@ import su.nightexpress.quests.registry.Registries;
 import su.nightexpress.quests.task.TaskType;
 
 import java.io.File;
+import java.nio.file.Path;
 import java.util.*;
 import java.util.function.UnaryOperator;
 
@@ -33,8 +34,8 @@ public class Quest implements IQuest {
     private NightItem           icon;
     private UniInt              objectivesAmount;
     private QuestObjectiveTable objectiveTable;
-    private List<String>  rewards;
-    private QuestXPReward battlePassXPReward;
+    private List<String>        rewards;
+    private QuestXPReward       battlePassXPReward;
 
     private long completionTime;
 
@@ -44,8 +45,9 @@ public class Quest implements IQuest {
         this.rewards = new ArrayList<>();
     }
 
+    @Override
     public void load() throws QuestLoadException {
-        FileConfig config = this.getConfig();
+        FileConfig config = this.loadConfig();
         String path = "";
 
         String typeName = ConfigValue.create(path + ".Type", "null").read(config);
@@ -71,7 +73,7 @@ public class Quest implements IQuest {
     }
 
     public void save() {
-        FileConfig config = this.getConfig();
+        FileConfig config = this.loadConfig();
         String path = "";
 
         config.set(path + ".Type", this.type.getId());
@@ -142,10 +144,10 @@ public class Quest implements IQuest {
         return new QuestData(uuid, this.id, objectives, rewardIds, scale, xpReward, active, expireDate);
     }
 
-    @NotNull
     @Override
-    public File getFile() {
-        return this.file;
+    @NotNull
+    public Path getPath() {
+        return this.file.toPath();
     }
 
     @NotNull

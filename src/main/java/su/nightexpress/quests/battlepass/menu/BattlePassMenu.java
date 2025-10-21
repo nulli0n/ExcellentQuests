@@ -200,6 +200,7 @@ public class BattlePassMenu extends LinkedMenu<QuestsPlugin, BattlePassSeason> i
                         .setPriority(Integer.MAX_VALUE)
                         .setHandler((viewer1, event) -> {
                             if (claimed || passLevel < level) return;
+                            if (type == BattlePassType.PREMIUM && !data.isPremium()) return;
 
                             rewards.forEach(reward -> {
                                 reward.runCommands(player, 0, level, 1D);

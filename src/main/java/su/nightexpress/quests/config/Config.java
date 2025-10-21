@@ -71,6 +71,16 @@ public class Config {
         "When set on 'true', daily quests are only available during the Battle Pass season."
     );
 
+    public static final ConfigValue<Boolean> QUESTS_ACCEPTION_REQUIRED = ConfigValue.create("Quests.AcceptionRequired",
+        true,
+    "Controls whether players must accept a quest to start progress in it."
+    );
+
+    public static final ConfigValue<Boolean> QUESTS_AUTO_COMPLETION_TIME = ConfigValue.create("Quests.AutoCompletionTime",
+        false,
+        "Controls whether quests's completion time will be linked with the quests refresh time."
+    );
+
     public static final ConfigValue<RankTable> QUESTS_AMOUT_PER_RANK = ConfigValue.create("Quests.AmountPerRank",
         RankTable::read,
         RankTable.builder(RankTable.Mode.RANK, 3).addRankValue("vip", 4).addRankValue("premium", 5).build(),

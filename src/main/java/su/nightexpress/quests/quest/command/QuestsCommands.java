@@ -51,6 +51,11 @@ public class QuestsCommands {
     }
 
     private static boolean openQuests(@NotNull CommandContext context, @NotNull ParsedArguments arguments) {
+        if (!context.isPlayer()) {
+            context.errorPlayerOnly();
+            return false;
+        }
+
         Player player = context.getPlayerOrThrow();
         manager.openQuests(player);
         return true;

@@ -68,6 +68,11 @@ public class MilestoneCommands {
     }
 
     private static boolean openCategories(@NotNull CommandContext context, @NotNull ParsedArguments arguments) {
+        if (!context.isPlayer()) {
+            context.errorPlayerOnly();
+            return false;
+        }
+
         Player player = context.getPlayerOrThrow();
         manager.openCategories(player);
         return true;

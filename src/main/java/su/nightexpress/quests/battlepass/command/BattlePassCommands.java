@@ -129,6 +129,11 @@ public class BattlePassCommands {
     }
 
     private static boolean openBattlePass(@NotNull CommandContext context, @NotNull ParsedArguments arguments) {
+        if (!context.isPlayer()) {
+            context.errorPlayerOnly();
+            return false;
+        }
+
         Player player = context.getPlayerOrThrow();
         manager.openBattlePass(player);
         return true;

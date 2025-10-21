@@ -14,6 +14,7 @@ import su.nightexpress.quests.registry.Registries;
 import su.nightexpress.quests.task.TaskType;
 
 import java.io.File;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -111,10 +112,10 @@ public class Milestone implements IQuest {
         return this.objectiveTable.getEntryMap().values().stream().mapToInt(objective -> objective.getAmount(level)).sum();
     }
 
-    @NotNull
     @Override
-    public File getFile() {
-        return this.file;
+    @NotNull
+    public Path getPath() {
+        return this.file.toPath();
     }
 
     @NotNull

@@ -22,6 +22,7 @@ import su.nightexpress.nightcore.util.time.TimeFormatType;
 import su.nightexpress.nightcore.util.time.TimeFormats;
 import su.nightexpress.quests.QuestsPlugin;
 import su.nightexpress.quests.battlepass.BattlePassManager;
+import su.nightexpress.quests.config.Config;
 import su.nightexpress.quests.config.Lang;
 import su.nightexpress.quests.quest.QuestManager;
 import su.nightexpress.quests.quest.data.QuestData;
@@ -88,6 +89,7 @@ public class QuestsMenu extends NormalMenu<QuestsPlugin> implements ConfigBased 
             double scale = questData.getScale();
             int unitsWorth = questData.countUnitsWorth();
             boolean hasBattleSeason = this.plugin.battlePassManager().map(BattlePassManager::isSeasonActive).orElse(false);
+            boolean autoCompletionTime = Config.QUESTS_AUTO_COMPLETION_TIME.get();
 
             viewer.addItem(quest.getIcon()
                 .hideAllComponents()
@@ -110,7 +112,7 @@ public class QuestsMenu extends NormalMenu<QuestsPlugin> implements ConfigBased 
                     if (questData.isExpired()) return;
 
                     questData.setActive(true);
-                    questData.setExpireDate(TimeUtil.createFutureTimestamp(quest.getCompletionTime()));
+                    questData.setExpireDate(autoCompletionTime ? user.getNewQuestsDate() : TimeUtil.createFutureTimestamp(quest.getCompletionTime()));
 
                     this.runNextTick(() -> this.flush(viewer));
                     Lang.QUESTS_QUEST_ACCEPTED.message().send(player, replacer -> replacer.replace(quest.replacePlaceholders()));

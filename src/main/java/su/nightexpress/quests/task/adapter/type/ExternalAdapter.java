@@ -24,13 +24,13 @@ public abstract class ExternalAdapter<I, O> extends AbstractAdapter<I, O> {
 
     @Override
     public boolean canHandle(@NotNull String fullName) {
-        return NightKey.fromString(fullName).namespace().equalsIgnoreCase(this.namespace);
+        return NightKey.key(fullName).namespace().equalsIgnoreCase(this.namespace);
     }
 
     @Override
     @Nullable
     public String getLocalizedName(@NotNull String fullName) {
-        NightKey key = NightKey.fromString(fullName);
+        NightKey key = NightKey.key(fullName);
         if (!this.isNamespace(key.namespace())) return null;
 
         I type = this.getTypeByName(key.value());
@@ -40,6 +40,6 @@ public abstract class ExternalAdapter<I, O> extends AbstractAdapter<I, O> {
     @NotNull
     public String toFullNameOfType(@NotNull I type) {
         String typeName = this.getTypeName(type);
-        return new NightKey(this.namespace, typeName).asString();
+        return NightKey.key(this.namespace, typeName).asString();
     }
 }
