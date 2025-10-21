@@ -70,4 +70,4 @@ Features built-in **Daily Quests**, **Milestones** and **Battle Pass**!
 - [Developer API](https://nightexpressdev.com/excellentquests/developer-api/)
 
 ## Donate
-If you like my work or enjoy using my plugins, feel free to [Buy me a coffee :icon-link-external:](https://ko-fi.com/nightexpress) :) Thank you! 🧡
+If you like my work or enjoy using my plugins, feel free to [Buy me a coffee](https://ko-fi.com/nightexpress) :) Thank you! 🧡
