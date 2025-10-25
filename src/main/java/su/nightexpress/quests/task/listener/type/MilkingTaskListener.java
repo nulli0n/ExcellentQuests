@@ -24,7 +24,7 @@ public class MilkingTaskListener extends TaskListener<Entity, AdapterFamily<Enti
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onTaskMilk(PlayerBucketFillEvent event) {
         Player player = event.getPlayer();
-        if (this.manager.canDoTasks(player)) return;
+        if (!this.manager.canDoTasks(player)) return;
 
         if (event.getItemStack() == null) return;
         if (event.getItemStack().getType() != Material.MILK_BUCKET) return;

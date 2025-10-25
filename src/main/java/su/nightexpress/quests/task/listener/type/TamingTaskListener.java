@@ -22,7 +22,7 @@ public class TamingTaskListener extends TaskListener<Entity, AdapterFamily<Entit
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onTaskTame(EntityTameEvent event) {
         Player player = (Player) event.getOwner();
-        if (this.manager.canDoTasks(player)) return;
+        if (!this.manager.canDoTasks(player)) return;
 
         LivingEntity entity = event.getEntity();
         if (this.manager.isSpawnerMob(entity)) return;

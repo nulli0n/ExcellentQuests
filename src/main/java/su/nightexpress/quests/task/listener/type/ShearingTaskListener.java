@@ -21,7 +21,7 @@ public class ShearingTaskListener extends TaskListener<Entity, AdapterFamily<Ent
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onTaskShear(PlayerShearEntityEvent event) {
         Player player = event.getPlayer();
-        if (this.manager.canDoTasks(player)) return;
+        if (!this.manager.canDoTasks(player)) return;
 
         Entity entity = event.getEntity();
         if (this.manager.isSpawnerMob(entity)) return;

@@ -3,6 +3,7 @@ package su.nightexpress.quests.task.adapter.type;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import su.nightexpress.nightcore.bridge.common.NightKey;
+import su.nightexpress.nightcore.util.LowerCase;
 
 public abstract class ExternalAdapter<I, O> extends AbstractAdapter<I, O> {
 
@@ -39,7 +40,7 @@ public abstract class ExternalAdapter<I, O> extends AbstractAdapter<I, O> {
 
     @NotNull
     public String toFullNameOfType(@NotNull I type) {
-        String typeName = this.getTypeName(type);
+        String typeName = LowerCase.INTERNAL.apply(this.getTypeName(type));
         return NightKey.key(this.namespace, typeName).asString();
     }
 }

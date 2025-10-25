@@ -6,7 +6,7 @@
 
     <groupId>su.nightexpress.quests</groupId>
     <artifactId>ExcellentQuests</artifactId>
-    <version>4.0.3-beta</version>
+    <version>4.0.4-beta</version>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>

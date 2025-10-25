@@ -25,14 +25,14 @@ public class Milestone implements IQuest {
     private final File   file;
     private final String id;
 
-    private TaskType<?, ?>               type;
-    private String                       category;
-    private String                       name;
-    private List<String>                 description;
-    private NightItem                    icon;
-    private int                          levels;
-    private MilestoneObjectiveTable      objectiveTable;
-    private List<String> rewards;
+    private TaskType<?, ?>          type;
+    private String                  category;
+    private String                  name;
+    private List<String>            description;
+    private NightItem               icon;
+    private int                     levels;
+    private MilestoneObjectiveTable objectiveTable;
+    private List<String>            rewards;
 
     public Milestone(@NotNull File file, @NotNull String id) {
         this.file = file;
