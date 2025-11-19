@@ -136,6 +136,7 @@ public class QuestManager extends AbstractManager<QuestsPlugin> {
 
         // Notify exprired quests.
         user.getQuestDatas().forEach(questData -> {
+            if (questData.isCompleted()) return;
             if (!questData.isActive()) return;
             if (!questData.isExpired()) return;
 

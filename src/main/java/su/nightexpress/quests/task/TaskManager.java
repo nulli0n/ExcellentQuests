@@ -28,11 +28,13 @@ import su.nightexpress.quests.task.workstation.WorkstationMode;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
+import java.util.function.Predicate;
 
 import static org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 
 public class TaskManager extends AbstractManager<QuestsPlugin> {
 
+    private static final Predicate<Block> BLOCK_FILTER = block -> true;
     private static final String PLAYER_BLOCK_MARKER = "player_block_marker";
 
     private final Set<SpawnReason> artificalMobSpawns;
@@ -51,6 +53,11 @@ public class TaskManager extends AbstractManager<QuestsPlugin> {
 
     @Override
     protected void onLoad() {
+        if (!Config.ANTI_ABUSE_COUNT_PLAYER_BLOCKS.get()) {
+            PlayerBlockTracker.initialize();
+            PlayerBlockTracker.BLOCK_FILTERS.add(BLOCK_FILTER);
+        }
+
         if (!Config.ANTI_ABUSE_COUNT_ARTIFICAL_MOBS.get()) {
             this.artificalMobSpawns.addAll(Lists.modify(Config.ANTI_ABUSE_ARTIFICAL_MOB_SPAWNS.get(), str -> Enums.get(str, SpawnReason.class)));
         }
