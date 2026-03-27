@@ -11,6 +11,7 @@ import su.nightexpress.nightcore.util.Players;
 import su.nightexpress.nightcore.util.placeholder.Replacer;
 import su.nightexpress.quests.QuestsPlaceholders;
 
+import java.math.BigDecimal;
 import java.util.*;
 import java.util.function.Function;
 
@@ -70,7 +71,16 @@ public class Reward implements Writeable {
     }
 
     public void runCommands(@NotNull Player player, int units, int level, double scale) {
-        Players.dispatchCommands(player, this.variableReplacer(units, level, scale, String::valueOf).apply(this.commands));
+        Players.dispatchCommands(player, this.variableReplacer(units, level, scale, Reward::formatCommandNumber).apply(this.commands));
+    }
+
+    @NotNull
+    private static String formatCommandNumber(double value) {
+        if (value == Math.rint(value)) {
+            return String.valueOf((long) value);
+        }
+
+        return BigDecimal.valueOf(value).stripTrailingZeros().toPlainString();
     }
 
     public record Variable(double base, double unitBonus, double[] levelBonus) implements Writeable {
